@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import connectdb from './utils/db.js';
+import userRouter from './routes/user.route.js';
 dotenv.config({});
 
 const app = express();
@@ -23,6 +24,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const port = process.env.PORT || 3000
+
+//api's
+app.use("/api/v1/user", userRouter);
+
 app.listen(port, () => {
     connectdb();
     console.log(`server is listening on port${port}`);
