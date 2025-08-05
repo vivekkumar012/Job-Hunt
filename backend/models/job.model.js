@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const jobSchema = new mongoose.model({
+const jobSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -13,6 +13,9 @@ const jobSchema = new mongoose.model({
         type: String
     },
     salary: {
+        type: Number
+    },
+    experienceLevel: {
         type: Number
     },
     location: {
