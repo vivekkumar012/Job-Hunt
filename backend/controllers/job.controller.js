@@ -2,9 +2,9 @@ import { jobModel } from "../models/job.model.js";
 
 export const postjob = async (req, res) => {
     try {
-        const { title, description, requirements, salary, location, jobType, experience, position, comapanyId} = req.body;
+        const { title, description, requirements, salary, location, jobType, experience, position, companyId} = req.body;
         const userId = req.id;
-        if(!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !comapanyId) {
+        if(!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
             return res.status(400).json({
                 message: "All fields are required for post the job",
                 success: false
@@ -13,13 +13,13 @@ export const postjob = async (req, res) => {
         const job = await jobModel.create({
             title,
             description,
-            requirements: required,
+            requirements,
             salary: Number(salary),
             location,
             jobType,
             experienceLevel: experience,
             position,
-            company: comapanyId,
+            company: companyId,
             created_by: userId
         })
         return res.status(201).json({
@@ -44,7 +44,10 @@ export const getAllJobs = async (req, res) => {
                 {description: {$regex:keyword, $options:"i"}}
             ]
         };
-        const jobs = await jobModel.find(query)
+        const jobs = await jobModel.find(query).populate({
+            path: "company"
+        }).sort({createdAt: -1});
+
         if(!jobs) {
             return res.status(404).json({
                 message: "Jobs not found",
