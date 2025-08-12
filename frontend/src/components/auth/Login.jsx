@@ -4,27 +4,70 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { USER_API_END_POINT } from "../../utils/constant";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
 
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${USER_API_END_POINT}/login`,
+        {
+          email,
+          password,
+          role,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        navigate("/");
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
           action=""
+          onSubmit={submitHandler}
           className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Login</h1>
           <div className="my-2">
             <Label>Email</Label>
-            <Input type="email" placeholder="demo@gmail.com" />
+            <Input
+              type="email"
+              placeholder="demo@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
-        
+
           <div className="my-2">
             <Label>Password</Label>
-            <Input type="password" placeholder="********" />
+            <Input
+              type="password"
+              placeholder="********"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div className="flex items-center justify-between">
             <RadioGroup className="flex items-center gap-4 my-5">
@@ -33,6 +76,8 @@ function Login() {
                   type="radio"
                   name="role"
                   value="student"
+                  checked={role === "student"}
+                  onChange={(e) => setRole(e.target.value)}
                   className="cursor-pointer"
                 />
                 <Label htmlFor="r1">Student</Label>
@@ -42,6 +87,8 @@ function Login() {
                   type="radio"
                   name="role"
                   value="recruiter"
+                  checked={role === "recruiter"}
+                  onChange={(e) => setRole(e.target.value)}
                   className="cursor-pointer"
                 />
                 <Label htmlFor="r2">Recruiter</Label>

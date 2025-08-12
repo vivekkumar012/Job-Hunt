@@ -5,6 +5,7 @@ import Navbar from './components/shared/Navbar'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Home from './components/Home'
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
       </Routes>
+      <Toaster />
     </div>
   )
 }

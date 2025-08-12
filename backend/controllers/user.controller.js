@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 export const register = async (req, res) => {
     try {
-        const { fullname, email, password, phoneNumber, role } = req.body;
+        const { fullname, email, phoneNumber, password, role } = req.body;
         if (!fullname || !email || !phoneNumber || !role || !password) {
             return res.status(402).json({
                 message: "All Field are required for register",
@@ -14,11 +14,17 @@ export const register = async (req, res) => {
         }
         //zod validation
         const userSchema = z.object({
-            firstname: z.string().min(4, { message: "FirstName must be longer than 3 chars" }),
+            fullname: z.string().min(4, { message: "FullName must be longer than 3 chars" }),
             email: z.string().email(),
             password: z.string().min(5, { message: "Password must be longer than 5 chars" })
         })
         const validateSchema = userSchema.safeParse(req.body);
+        if (!validateSchema.success) {
+            return res.status(400).json({
+                message: "Validation failed",
+                errors: validateSchema.error.errors
+            });
+        }
 
         const user = await userModel.findOne({
             email: email
@@ -35,7 +41,8 @@ export const register = async (req, res) => {
             email: email,
             phoneNumber: phoneNumber,
             password: hashPass,
-            role
+            role,
+            // profileImage: req.file ? req.file.filename : null
         })
         return res.status(200).json({
             message: "Successfully signedUp",
@@ -136,23 +143,23 @@ export const updateProfile = async (req, res) => {
         //cloudinary wala kaam yaha per hoga
 
         let skillsArray;
-        if(skills) {
+        if (skills) {
             skillsArray = skills.split(",");
         }
         //const skillsArray = skills.split(",");
         const userId = req.id; //middleware se
         let user = await userModel.findById(userId);
-        if(!user) {
+        if (!user) {
             return res.status(400).json({
                 message: "User not found",
                 success: false
             })
         }
-        if(fullname) user.fullname = fullname
-        if(email) user.email = email
-        if(phoneNumber) user.phoneNumber = phoneNumber
-        if(bio) user.profile.bio = bio
-        if(skills)  user.profile.skills = skillsArray
+        if (fullname) user.fullname = fullname
+        if (email) user.email = email
+        if (phoneNumber) user.phoneNumber = phoneNumber
+        if (bio) user.profile.bio = bio
+        if (skills) user.profile.skills = skillsArray
 
         //resume upload yaha per
 
