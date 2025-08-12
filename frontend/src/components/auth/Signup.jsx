@@ -8,6 +8,9 @@ import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_END_POINT } from "../../utils/constant";
 import toast, { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 function Signup() {
   const [fullname, setFullName] = useState("");
@@ -18,6 +21,8 @@ function Signup() {
   const [file, setFile] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -31,6 +36,7 @@ function Signup() {
       formData.append("file", file);
     }
     try {
+      dispatch(setLoading(true));
       const response = await axios.post(
         `${USER_API_END_POINT}/register`,
         formData,
@@ -46,6 +52,8 @@ function Signup() {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -134,9 +142,17 @@ function Signup() {
               />
             </div>
           </div>
-          <button className="w-full bg-black text-white hover:text-white hover:bg-gray-700 p-2 rounded-md cursor-pointer mb-2">
-            Signup
-          </button>
+          {loading ? (
+            <Button className="w-full my-4">
+              {" "}
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
+            </Button>
+          ) : (
+            <button className="w-full bg-black text-white hover:text-white hover:bg-gray-700 p-2 rounded-md cursor-pointer mb-2">
+              Login
+            </button>
+          )}
+
           <span>
             Already have an account?{" "}
             <Link to={"/login"} className="text-blue-600 my-2">
