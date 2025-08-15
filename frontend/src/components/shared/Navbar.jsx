@@ -34,7 +34,7 @@ function Navbar() {
                 <Button variant="outline" className={"cursor-pointer"}>Login</Button>
               </Link>
               <Link to={"/signup"}>
-                <Button className="bg-[#6A38C2] hover:bg-[#5b30a6] cursor-pointer">
+                <Button className="bg-[#6A38C2] text-white hover:bg-[#5b30a6] cursor-pointer">
                   Signup
                 </Button>
               </Link>
