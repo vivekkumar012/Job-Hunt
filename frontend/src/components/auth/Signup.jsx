@@ -149,7 +149,7 @@ function Signup() {
             </Button>
           ) : (
             <button className="w-full bg-black text-white hover:text-white hover:bg-gray-700 p-2 rounded-md cursor-pointer mb-2">
-              Login
+              Signup
             </button>
           )}
 

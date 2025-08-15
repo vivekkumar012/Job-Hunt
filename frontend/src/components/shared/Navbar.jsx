@@ -18,16 +18,13 @@ function Navbar() {
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
             <li className="cursor-pointer">
-              {/* <Link>Home</Link> */}
-              Home
+              <Link to={"/"}>Home</Link>
             </li>
             <li className="cursor-pointer">
-              {/* <Link>Jobs</Link> */}
-              Jobs
+              <Link to={"/jobs"}>Jobs</Link>
             </li>
             <li className="cursor-pointer">
-              {/* <Link>Browse</Link> */}
-              Browse
+              <Link to={"/browse"}>Browse</Link>
             </li>
           </ul>
 
