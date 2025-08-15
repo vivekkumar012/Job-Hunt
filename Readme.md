@@ -38,7 +38,7 @@ The platform allows **job seekers** to search and apply for jobs and **recruiter
 - Cloudinary (for file uploads)
 
 **Other Tools**
-- Stripe / Razorpay (for premium features) *(if integrated)*
+- Stripe / Razorpay (for premium features)
 - Postman (API Testing)
 
 ---
@@ -48,7 +48,7 @@ The platform allows **job seekers** to search and apply for jobs and **recruiter
 ```bash
 📦 job-portal
  ┣ 📂 backend
- ┃ ┣ 📂 config
+ ┃ ┣ 📂 utils
  ┃ ┣ 📂 controllers
  ┃ ┣ 📂 models
  ┃ ┣ 📂 routes
@@ -58,7 +58,7 @@ The platform allows **job seekers** to search and apply for jobs and **recruiter
  ┃ ┣ 📂 src
  ┃ ┃ ┣ 📂 components
  ┃ ┃ ┣ 📂 pages
- ┃ ┃ ┣ 📂 context
+ ┃ ┃ ┣ 📂 redux
  ┃ ┃ ┗ App.jsx
  ┣ package.json
  ┗ README.md
