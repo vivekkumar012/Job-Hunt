@@ -21,7 +21,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/jobs' element={<Jobs />} />
         <Route path='/description/:id' element={<JobDescription />} />
-        <Route path='browse' element={<Browse />} />
+        <Route path='/browse' element={<Browse />} />
         <Route path='/profile' element={<Profile />} />
       </Routes>
       <Toaster />
