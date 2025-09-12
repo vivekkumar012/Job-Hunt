@@ -14,12 +14,10 @@ function UpdateProfileDialog({ open, setOpen }) {
           </DialogHeader>
           <form>
             <div className="grid gap-4 py-4">
-                <Label htmlFor="name" className="text-right">Name</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  className={"col-span-3"}
-                />
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input id="name" name="name" className={"col-span-3"} />
             </div>
           </form>
         </DialogContent>
